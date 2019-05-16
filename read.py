@@ -20,7 +20,6 @@ def load(file_path):
             index = i * image_size + j
             val = int(image_data[2 * index + 1]) * 256 + int(image_data[2 * index])
             image[j, i] = val
-    image = image.astype(np.float32)
 
     # nomarlize
     # image_std = (image - np.mean(image)) / np.std(image)
@@ -30,9 +29,10 @@ def load(file_path):
     # img = (image_minmax*255).astype(np.uint8)
     # img = cv.cvtColor(img,cv.COLOR_GRAY2BGR)
     ## 映射到0，1
-    image_maxmin = (image-np.min(image))/(np.max(image)-np.min(image))
+    image_maxmin = image/(256*256)
 
     ## write itk
+    # image = image.astype(np.float32)
     # image_itk = itk.GetImageFromArray(image)
     # # index
     # start = itk.Index[2]()
@@ -55,10 +55,10 @@ def load(file_path):
     # writer.Update()
     print('convert done')
 
-    return image
+    return image_maxmin
 
 if __name__ == '__main__':
-    file_path = 'C:\\Users\\Administrator\\Desktop\\liver_cases_rawdata\\liver_cases_rawdata\\yanjie\\B_13_LI_1498536598_843000_UNPROCESSED_IBRST_00'
+    file_path = 'C:\\Users\\Administrator\\Desktop\\liver_cases_rawdata\\liver_cases_rawdata\\yanjie\\A_75_LI_1498537683_563000_UNPROCESSED_IBRST_00'
     a = load(file_path)
     a = cv.flip(a,0,dst=None)
     plt.imshow(a, cmap=plt.cm.gray)

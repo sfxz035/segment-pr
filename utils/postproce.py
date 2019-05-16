@@ -35,7 +35,7 @@ def filterFewPoint(mask):
 def contourmask(img,mask,collections=None):
     maskFilt = filterFewPoint(mask)
     maskFilt = maskFilt.astype(np.uint8)
-    contours, hierarchy = cv.findContours(maskFilt, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv.findContours(maskFilt, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     nub = len(contours)
     boxes = []
     for i in range(0, nub):
